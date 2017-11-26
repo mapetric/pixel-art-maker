@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pixel Art Maker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+</head>
+<body>
+  <div id = 'header'>
+    <div class = 'column'>
+      <img id = 'arrow' src='http://i66.tinypic.com/16lhfmx.png' alt='arrows'>
+    </div>
+    <div class = 'columnHeader'>
+      <h1>Pixel Art Maker</h1>
+    </div>
+  </div>
+  <div id = 'content'>
+    <div id = 'dropdown' class = 'menu hide'>
+      <div id = 'dropdownOne' class = 'menuItem'>
+        <img class = 'icon' src='http://i66.tinypic.com/kbbpco.png' alt='create canvas'>
+      </div>
+      <div id = 'dropdownTwo' class = 'menuItem'>
+        <img class = 'icon' src='http://i67.tinypic.com/2m9pus.png' alt='choose color'>
+      </div>
+      <div id = 'dropdownThree' class = 'menuItem'>
+        <img class = 'icon' src='http://i68.tinypic.com/20hpjr8.png' alt='erase'>
+      </div>
+      <div id = 'dropdownFour' class = 'menuItem'>
+        <img class = 'icon' src='http://i66.tinypic.com/2ia9xjl.png' alt='fill'>
+      </div>
+      <div id = 'dropdownFive' class = 'menuItem'>
+        <img class = 'icon' src='http://i67.tinypic.com/9gd735.png' alt='recently used colors'>
+      </div>
+
+    </div>
+    <div  id = 'dropright'>
+      <div id = 'droprightOne' class = 'menuItemDropright hide'>
+        <form id="sizePicker">
+            Grid Height:
+            <input type="number" id="input_height" name="height" min="1" value="1"><br>
+            <span>Grid Width :  </span>
+            <input type="number" id="input_width" name="width" min="1" value="1"><br>
+            <input type="submit">
+        </form>
+      </div>
+      <div id = 'droprightTwo'class = 'menuItemDropright hide '>
+        <div class = 'margins'>
+          <input type="color" id="colorPicker"><br>
+          <span>Choose a color.</span>
+        </div>
+      </div>
+    </div>
+    <table id="pixel_canvas"></table>
+  </div>
+  <div class = 'hide' id = 'footer'>
+    <div class = 'displayFlex'>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+      <div class = 'recentlyUsedColor'>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="designs.js"></script>
+</body>
+</html>
