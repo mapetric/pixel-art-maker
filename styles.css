@@ -40,17 +40,6 @@ input[type = number] {
       width: 80%;
 }
 
-input[type = 'submit']{
-      display: block;
-      margin: 15px auto;
-      width: 80%;
-      border-radius: 100px;
-      padding: 10px 10px;
-      text-transform: uppercase;
-      background-color: #705e79;
-      color: #ffffff;
-      border-color: #ffffff;
-}
 
 input[type = 'reset']{
       display: block;
@@ -76,10 +65,7 @@ input[type = color]{
       border-color: #ffffff;
 }
 
-input[type='submit']:hover {
-    border-color: #00ff00;
-    cursor: pointer;
-}
+
 input[type='reset']:hover {
     border-color: #00ff00;
     cursor: pointer;

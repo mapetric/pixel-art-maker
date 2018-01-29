@@ -6,10 +6,11 @@ const submitGrid = document.getElementById('button');
 const gridWidth = document.getElementById('input_width');
 const gridHeight = document.getElementById('input_height');
 const resetGrid = document.getElementById('reset');
+const randomizeGrid = document.getElementById('random');
+const randomColors = document.getElementById('randomColors');
 
 
 let color, rows, columns, dimension, windowHeight, windowWidth, spaceX, spaceY;
-let active = true;
 let gridPresent = false;
 let blocks = [];
 
@@ -24,6 +25,7 @@ function Block(x, y) {
       this.y = y;
       this.backgroundColor = 'white';
       this.updateColor = function(color){
+            this.lastColor = this.backgroundColor;
             this.backgroundColor = color;
       }
       this.update = function(i, j){
@@ -68,13 +70,41 @@ function resize() {
 }
 
 function drawArt() {
-      if (active) {
-            c.fillStyle = 'black';
-            c.fillRect(spaceX / 2, spaceY / 2, dimension * columns, dimension * rows);
-            blocks.forEach (function (element) {
-                  c.fillStyle = element.backgroundColor;
-                  c.fillRect(element.x, element.y, 0.9 * dimension, 0.9 * dimension);
+      c.fillStyle = 'black';
+      c.fillRect(spaceX / 2, spaceY / 2, dimension * columns, dimension * rows);
+      blocks.forEach (function (element) {
+            c.fillStyle = element.backgroundColor;
+            c.fillRect(element.x, element.y, 0.9 * dimension, 0.9 * dimension);
+      });
+}
+
+function randomize() {
+      rows = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
+      columns = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
+      blocks = [];
+      gridPresent = false;
+      resize();
+      makeGrid();
+      drawArt();
+      gridPresent = true;
+}
+
+function getRandomHex() {
+      let number = (Math.floor(Math.random()*(255-1) + 1).toString(16));
+      if (number.length < 2) {
+            number = '0' + number;
+      }
+      return number;
+}
+
+function randomizeColors() {
+      if (gridPresent) {
+            blocks.forEach (function(element){
+                  element.updateColor('#' + getRandomHex() + getRandomHex() + getRandomHex());
             });
+            resize();
+            makeGrid();
+            drawArt();
       }
 }
 
@@ -97,6 +127,9 @@ function init() {
                   blocks.forEach (function (element) {
                         if ((mouse.x > element.x && mouse.x < element.x + dimension) && (mouse.y  > element.y && mouse.y < element.y + dimension)){
                               element.updateColor(color);
+                              if (element.lastColor === element.backgroundColor){
+                                    element.updateColor('white');
+                              }
                         }
                   });
                   drawArt();
@@ -113,7 +146,6 @@ function init() {
             }
             rows = gridHeight.value;
             columns = gridWidth.value;
-            console.log ('rage on!');
             resize();
             makeGrid();
             drawArt();
@@ -127,6 +159,15 @@ function init() {
                   })
             }
       });
+      randomizeGrid.addEventListener('click', function(event) {
+            event.preventDefault();
+            randomize();
+      });
+      randomColors.addEventListener('click', function(event) {
+            event.preventDefault();
+            randomizeColors();
+      });
+
 
 }
 
