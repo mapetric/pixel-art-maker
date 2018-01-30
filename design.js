@@ -175,8 +175,9 @@ function init() {
       window.addEventListener('click', function(event) {
             color = eraser ? '#ffffff' : selectedColor.value;
             if (getColorFromCanvas) {
-                  selectedColor.value = (blocks[getTarget()]).backgroundColor;
                   color = (blocks[getTarget()]).backgroundColor;
+                  selectedColor.value = color;
+                  blocksHolding = [];
             } else if (gridPresent) {
                   if (!holding && blocks[getTarget()] !== undefined ) {
                         blocksHolding.push(blocks[getTarget()]);
