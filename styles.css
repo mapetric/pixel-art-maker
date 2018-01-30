@@ -53,6 +53,19 @@ input[type = 'reset']{
       border-color: #ffffff;
 }
 
+input[type = 'submit']{
+      display: block;
+      margin: 15px auto;
+      width: 80%;
+      border-radius: 100px;
+      padding: 10px 10px;
+      text-transform: uppercase;
+      background-color: #705e79;
+      color: #ffffff;
+      border-color: #ffffff;
+}
+
+
 input[type = color]{
       display: block;
       margin: 15px auto;
@@ -70,9 +83,16 @@ input[type='reset']:hover {
     border-color: #00ff00;
     cursor: pointer;
 }
+
+input[type='submit']:hover {
+    cursor: pointer;
+}
+
+
 input[type='color']:hover {
     border-color: #00ff00;
     cursor: pointer;
+    size: 2;
 }
 
 .row {

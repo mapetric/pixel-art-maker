@@ -8,11 +8,18 @@ const gridHeight = document.getElementById('input_height');
 const resetGrid = document.getElementById('reset');
 const randomizeGrid = document.getElementById('random');
 const randomColors = document.getElementById('randomColors');
+const eraserButton = document.getElementById('eraser');
+const colorFromCanvas = document.getElementById('colorFromCanvas');
 
 
 let color, rows, columns, dimension, windowHeight, windowWidth, spaceX, spaceY;
 let gridPresent = false;
+let fill = true;
+let holding = false;
+let eraser = false;
+let getColorFromCanvas = false;
 let blocks = [];
+let blocksHolding = [];
 
 
 let mouse = {
@@ -23,7 +30,7 @@ let mouse = {
 function Block(x, y) {
       this.x = x;
       this.y = y;
-      this.backgroundColor = 'white';
+      this.backgroundColor = '#ffffff';
       this.updateColor = function(color){
             this.lastColor = this.backgroundColor;
             this.backgroundColor = color;
@@ -108,6 +115,29 @@ function randomizeColors() {
       }
 }
 
+function getTarget() {
+      let solution;
+      if (gridPresent) {
+            blocks.forEach (function (element) {
+                  if ((mouse.x > element.x && mouse.x < element.x + dimension) && (mouse.y  > element.y && mouse.y < element.y + dimension)){
+                        solution = blocks.indexOf(element);
+                  }
+            });
+            return solution;
+      }
+}
+
+
+// function fill(row, column) {
+//       color = selectedColor.value;
+//       if (blocks[column + row * columns].backgroundColor === color) {
+//             return;
+//       }
+//       if (blocks[column + row * columns].)
+//       blocks[column + row * columns].updateColor(color);
+// }
+
+
 function init() {
       resize();
       window.addEventListener('resize', function() {
@@ -118,21 +148,52 @@ function init() {
       window.addEventListener('mousemove', function(event) {
             mouse.x = event.x - windowWidth * 0.2;
             mouse.y = event.y;
+            if (holding) {
+                  blocks.forEach (function(element){
+                        if ((mouse.x > element.x && mouse.x < element.x + dimension) && (mouse.y  > element.y && mouse.y < element.y + dimension)){
+                              if (! blocksHolding.includes(element)) {
+                                    blocksHolding.push(element);
+                              }
+                        }
+                  });
+            }
+      });
+
+      canvas.addEventListener('mousedown', function(event){
+            holding = true;
+      });
+
+      canvas.addEventListener('mouseup', function(event){
+            holding = false;
+      });
+
+      canvas.addEventListener('mouseleave', function(event){
+            holding = false;
       });
 
 
       window.addEventListener('click', function(event) {
-            color = selectedColor.value;
-            if (gridPresent) {
+            color = eraser ? '#ffffff' : selectedColor.value;
+            if (getColorFromCanvas) {
+                  selectedColor.value = (blocks[getTarget()]).backgroundColor;
+                  color = (blocks[getTarget()]).backgroundColor;
+            } else if (gridPresent) {
+                  if (!holding && blocks[getTarget()] !== undefined ) {
+                        blocksHolding.push(blocks[getTarget()]);
+                  }
                   blocks.forEach (function (element) {
                         if ((mouse.x > element.x && mouse.x < element.x + dimension) && (mouse.y  > element.y && mouse.y < element.y + dimension)){
                               element.updateColor(color);
                               if (element.lastColor === element.backgroundColor){
-                                    element.updateColor('white');
+                                    element.updateColor('#ffffff');
                               }
                         }
                   });
+                  blocksHolding.forEach(function(element){
+                        element.updateColor(color);
+                  });
                   drawArt();
+                  blocksHolding = [];
             }
       });
 
@@ -140,12 +201,18 @@ function init() {
             event.preventDefault();
             if (gridPresent) {
                   gridPresent = false;
-                  c.fillStyle = 'white';
+                  c.fillStyle = '#ffffff';
                   c.fillRect(spaceX / 2, spaceY / 2, dimension * columns, dimension * rows);
                   blocks = [];
             }
             rows = gridHeight.value;
             columns = gridWidth.value;
+            if (rows > 50) {
+                  rows = 50;
+            }
+            if (columns > 50) {
+                  columns = 50;
+            }
             resize();
             makeGrid();
             drawArt();
@@ -166,6 +233,25 @@ function init() {
       randomColors.addEventListener('click', function(event) {
             event.preventDefault();
             randomizeColors();
+      });
+      eraserButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            eraserButton.style.borderColor = eraser ? '#ffffff' : '#00ff00';
+            eraser = !eraser;
+            if (getColorFromCanvas) {
+                  colorFromCanvas.style.borderColor = getColorFromCanvas ? '#ffffff' : '#00ff00';
+                  getColorFromCanvas = !getColorFromCanvas;
+            }
+
+      });
+      colorFromCanvas.addEventListener('click', function(event) {
+            event.preventDefault();
+            colorFromCanvas.style.borderColor = getColorFromCanvas ? '#ffffff' : '#00ff00';
+            getColorFromCanvas = !getColorFromCanvas;
+            if (eraser) {
+                  eraserButton.style.borderColor = eraser ? '#ffffff' : '#00ff00';
+                  eraser = !eraser;
+            }
       });
 
 
