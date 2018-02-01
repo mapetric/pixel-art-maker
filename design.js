@@ -21,12 +21,13 @@ let getColorFromCanvas = false;
 let blocks = [];
 let blocksHolding = [];
 
-
+// object that will keep the coordinates for the mouse.
 let mouse = {
       x: undefined,
       y: undefined
 }
 
+// function object that will take care of our 'pixels'
 function Block(x, y) {
       this.x = x;
       this.y = y;
@@ -41,6 +42,7 @@ function Block(x, y) {
       }
 }
 
+// function that determinates the dimensions for our pixels and the spacing of the canvas on the screen
 function getSize() {
       if (0.95 * windowHeight / rows >= 0.8 * windowWidth / columns) {
             dimension = 0.9 * ((0.8 * windowWidth) / columns);
@@ -51,6 +53,7 @@ function getSize() {
       spaceY = windowHeight - rows * dimension;
 }
 
+// function that creates the grid if it's not present, if it is present it just updates it (for resizing)
 function makeGrid() {
       if (!gridPresent){
             for (let i = 0; i < rows; i++) {
@@ -68,6 +71,7 @@ function makeGrid() {
 
 }
 
+// function that resizes the canvas to fit the window
 function resize() {
       windowWidth = window.innerWidth;
       windowHeight = window.innerHeight;
@@ -76,6 +80,7 @@ function resize() {
       getSize();
 }
 
+// function that draws the borders and pixels
 function drawArt() {
       c.fillStyle = 'black';
       c.fillRect(spaceX / 2, spaceY / 2, dimension * columns, dimension * rows);
@@ -85,9 +90,10 @@ function drawArt() {
       });
 }
 
+// function that creates a grid with random number of rows and columns
 function randomize() {
-      rows = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
-      columns = Math.floor(Math.random() * (50 - 1 + 1)) + 1;
+      rows = Math.floor(Math.random() * (50)) + 1;
+      columns = Math.floor(Math.random() * (50)) + 1;
       blocks = [];
       gridPresent = false;
       resize();
@@ -96,14 +102,16 @@ function randomize() {
       gridPresent = true;
 }
 
+// function that gets a random hex number thats between 0-255 in decimal
 function getRandomHex() {
-      let number = (Math.floor(Math.random()*(255-1) + 1).toString(16));
+      let number = (Math.floor(Math.random()*(254) + 1).toString(16));
       if (number.length < 2) {
             number = '0' + number;
       }
       return number;
 }
 
+// function that fills the pixels with random hex colors
 function randomizeColors() {
       if (gridPresent) {
             blocks.forEach (function(element){
@@ -115,6 +123,7 @@ function randomizeColors() {
       }
 }
 
+// function that returns the index of the pixel you clicked onto
 function getTarget() {
       let solution;
       if (gridPresent) {
@@ -127,24 +136,18 @@ function getTarget() {
       }
 }
 
-
-// function fill(row, column) {
-//       color = selectedColor.value;
-//       if (blocks[column + row * columns].backgroundColor === color) {
-//             return;
-//       }
-//       if (blocks[column + row * columns].)
-//       blocks[column + row * columns].updateColor(color);
-// }
-
-
+// function that initializes the app
 function init() {
       resize();
+
+      // event listener when resizing the screen
       window.addEventListener('resize', function() {
             resize();
             makeGrid();
             drawArt();
       });
+
+      // event listener that logs the coordinates of the mouse on the canvas when moving and adds the pixel boxes you enter to the array if holding down left button (if they aren't in the array already)
       window.addEventListener('mousemove', function(event) {
             mouse.x = event.x - windowWidth * 0.2;
             mouse.y = event.y;
@@ -159,22 +162,25 @@ function init() {
             }
       });
 
+      // event listener  that tracks mousedown
       canvas.addEventListener('mousedown', function(event){
             holding = true;
       });
 
+      // event listener  that tracks mouseup
       canvas.addEventListener('mouseup', function(event){
             holding = false;
       });
 
+      // event listener  that tracks the moment the mouse leaves the canvas and sets the holding boolean to false
       canvas.addEventListener('mouseleave', function(event){
             holding = false;
       });
 
-
+      // event listener  that takes care of updating colors of pixels when drawing, it also gets the color of the pixel if the color from canvas button is pressed
       window.addEventListener('click', function(event) {
             color = eraser ? '#ffffff' : selectedColor.value;
-            if (getColorFromCanvas) {
+            if (getColorFromCanvas && gridPresent) {
                   color = (blocks[getTarget()]).backgroundColor;
                   selectedColor.value = color;
                   blocksHolding = [];
@@ -198,6 +204,7 @@ function init() {
             }
       });
 
+      // event listener takes care of getting the user input for the grid
       submitGrid.addEventListener('click', function(event) {
             event.preventDefault();
             if (gridPresent) {
@@ -219,6 +226,8 @@ function init() {
             drawArt();
             gridPresent = true;
       });
+
+      // event listener for reset button
       resetGrid.addEventListener('click', function(event) {
             event.preventDefault();
             if (gridPresent) {
@@ -227,14 +236,20 @@ function init() {
                   })
             }
       });
+
+      // event listener for randomize grid button
       randomizeGrid.addEventListener('click', function(event) {
             event.preventDefault();
             randomize();
       });
+
+      // event listener for random colors button
       randomColors.addEventListener('click', function(event) {
             event.preventDefault();
             randomizeColors();
       });
+
+      // event listener that sets the border color for eraser button based on it's state and changes it's state (if color from canvas is pressed it turns it off)
       eraserButton.addEventListener('click', function(event) {
             event.preventDefault();
             eraserButton.style.borderColor = eraser ? '#ffffff' : '#00ff00';
@@ -245,6 +260,8 @@ function init() {
             }
 
       });
+
+      // event listener that sets the border color for color from canvas button based on it's state and changes it's state (if eraser is pressed it turns it off)
       colorFromCanvas.addEventListener('click', function(event) {
             event.preventDefault();
             colorFromCanvas.style.borderColor = getColorFromCanvas ? '#ffffff' : '#00ff00';
