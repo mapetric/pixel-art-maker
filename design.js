@@ -19,7 +19,6 @@ let holding = false;
 let eraser = false;
 let getColorFromCanvas = false;
 let blocks = [];
-let blocksHolding = [];
 
 // object that will keep the coordinates for the mouse.
 let mouse = {
@@ -151,12 +150,12 @@ function init() {
       window.addEventListener('mousemove', function(event) {
             mouse.x = event.x - windowWidth * 0.2;
             mouse.y = event.y;
+            color = color = eraser ? '#ffffff' : selectedColor.value;
             if (holding) {
                   blocks.forEach (function(element){
                         if ((mouse.x > element.x && mouse.x < element.x + dimension) && (mouse.y  > element.y && mouse.y < element.y + dimension)){
-                              if (! blocksHolding.includes(element)) {
-                                    blocksHolding.push(element);
-                              }
+                              element.updateColor(color);
+                              drawArt();
                         }
                   });
             }
@@ -183,24 +182,13 @@ function init() {
             if (getColorFromCanvas && gridPresent) {
                   color = (blocks[getTarget()]).backgroundColor;
                   selectedColor.value = color;
-                  blocksHolding = [];
             } else if (gridPresent) {
-                  if (!holding && blocks[getTarget()] !== undefined ) {
-                        blocksHolding.push(blocks[getTarget()]);
-                  }
                   blocks.forEach (function (element) {
                         if ((mouse.x > element.x && mouse.x < element.x + dimension) && (mouse.y  > element.y && mouse.y < element.y + dimension)){
                               element.updateColor(color);
-                              if (element.lastColor === element.backgroundColor){
-                                    element.updateColor('#ffffff');
-                              }
                         }
                   });
-                  blocksHolding.forEach(function(element){
-                        element.updateColor(color);
-                  });
                   drawArt();
-                  blocksHolding = [];
             }
       });
 
