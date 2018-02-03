@@ -148,6 +148,7 @@ function init() {
 
       // event listener that logs the coordinates of the mouse on the canvas when moving and adds the pixel boxes you enter to the array if holding down left button (if they aren't in the array already)
       window.addEventListener('mousemove', function(event) {
+            event.preventDefault();
             mouse.x = event.x - windowWidth * 0.2;
             mouse.y = event.y;
             color = color = eraser ? '#ffffff' : selectedColor.value;
@@ -163,16 +164,19 @@ function init() {
 
       // event listener  that tracks mousedown
       canvas.addEventListener('mousedown', function(event){
+            event.preventDefault();
             holding = true;
       });
 
       // event listener  that tracks mouseup
       canvas.addEventListener('mouseup', function(event){
+            event.preventDefault();
             holding = false;
       });
 
       // event listener  that tracks the moment the mouse leaves the canvas and sets the holding boolean to false
       canvas.addEventListener('mouseleave', function(event){
+            event.preventDefault();
             holding = false;
       });
 

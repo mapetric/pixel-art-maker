@@ -32,9 +32,8 @@ input[type = number] {
       align-items: center;
       width: 6em;
       text-align: center;
-      padding: 10px 10px;
-      margin-top: 15px;
-      margin: 15px auto;
+      padding: 0.5vh 0.5vw;
+      margin: 2vh auto;
       border: none;
       border-radius: 100px;
       width: 80%;
@@ -46,7 +45,7 @@ input[type = 'reset']{
       margin: 15px auto;
       width: 80%;
       border-radius: 100px;
-      padding: 10px 10px;
+      padding: 0.5vh 0.5vw;
       text-transform: uppercase;
       background-color: #705e79;
       color: #ffffff;
@@ -58,7 +57,7 @@ input[type = 'submit']{
       margin: 15px auto;
       width: 80%;
       border-radius: 100px;
-      padding: 10px 10px;
+      padding: 0.5vh 0.5vw;
       text-transform: uppercase;
       background-color: #705e79;
       color: #ffffff;
@@ -71,7 +70,7 @@ input[type = color]{
       margin: 15px auto;
       width: 40%;
       border-radius: 100px;
-      padding: 10px 10px;
+      padding: 0.5vh 0.5vw;
       text-transform: uppercase;
       background-color: #705e79;
       color: #ffffff;
@@ -98,20 +97,16 @@ input[type='color']:hover {
 
 .row {
       width: 100%;
-
+      display: grid;
 }
 .column1 {
       min-width: 20vw;
       max-width: 20vw;
       min-height: 100vh;
-      float: left;
+      float:left;
       background-color: #291b31;
 }
 .column2 {
       width: 80vw;
       display: inline-flex;
-}
-.centered {
-
-      margin-top: 50%;
 }
