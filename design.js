@@ -182,6 +182,8 @@ function init() {
             if (getColorFromCanvas && gridPresent) {
                   color = (blocks[getTarget()]).backgroundColor;
                   selectedColor.value = color;
+                  colorFromCanvas.style.borderColor = getColorFromCanvas ? '#ffffff' : '#00ff00';
+                  getColorFromCanvas = !getColorFromCanvas;
             } else if (gridPresent) {
                   blocks.forEach (function (element) {
                         if ((mouse.x > element.x && mouse.x < element.x + dimension) && (mouse.y  > element.y && mouse.y < element.y + dimension)){
