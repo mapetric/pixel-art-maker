@@ -151,7 +151,7 @@ function init() {
             mouse.x = event.x - windowWidth * 0.2;
             mouse.y = event.y;
             color = color = eraser ? '#ffffff' : selectedColor.value;
-            if (holding) {
+            if (holding && !getColorFromCanvas) {
                   blocks.forEach (function(element){
                         if ((mouse.x > element.x && mouse.x < element.x + dimension) && (mouse.y  > element.y && mouse.y < element.y + dimension)){
                               element.updateColor(color);
